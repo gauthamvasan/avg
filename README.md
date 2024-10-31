@@ -1,5 +1,11 @@
 # Action Value Gradient Algorithm
 
+This repo provides an implementation of the following incremental learning algorithms:
+- Action Value Gradient (AVG)
+- Incremental One-Step Actor-Critic (IAC)
+- Incremental Soft Actor Critic (SAC-1)
+
+
 ```python
 python avg.py --env "Humanoid-v4" --N 10001000
 ```
