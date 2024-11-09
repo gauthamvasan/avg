@@ -13,15 +13,6 @@ def replicate_run():
     
     args = sample_hyper_params(args)
 
-    if args.env == "mountain_car_continuous":
-        args.gamma = 1
-
-    if args.env in ["Walker2d-v4", "Hopper-v4"]:
-        args.alpha_lr = 0.6
-    
-    if args.env == "reacher_hard":
-        args.gamma = 0.95
-
     args.experiment_dir = "./"
     os.makedirs(args.results_dir, exist_ok=True)
     pkl_fpath = os.path.join(args.results_dir, "./{}_{}_{}_seed-{}.pkl".format(args.env, args.algo, args.hyp_seed, args.seed))
