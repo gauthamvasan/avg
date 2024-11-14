@@ -10,6 +10,11 @@ This repo provides an implementation of the following incremental learning algor
 python avg.py --env "Humanoid-v4" --N 10001000
 ```
 
+## Robot Tasks
+
+| ![UR-Reacher-2](assets/UR-Reacher-2.gif) <br> UR-Reacher-2 | ![Create-Mover](assets/Create-Mover.gif) <br /> Create-Mover |
+| --- | --- |
+
 ## Hyper-parameter search
 *AVG*
 ```
@@ -33,5 +38,11 @@ python hyp_sweep.py --algo "isac" --hyp_seed 146 --env "HalfCheetah-v4" --N 1000
 
 ## Cite
 ```bash
-Vasan, G., Elsayed, M., Azimi, S. A., He, J., Shahriar, F., Bellinger, C., White, M., & Mahmood, A. R. (2024). Deep policy gradient methods without batch updates, target networks, or replay buffers. To appear in Neural Information Processing Systems.
+@inproceedings{vasan2024deep,
+  title={Deep Policy Gradient Methods Without Batch Updates, Target Networks, or Replay Buffers},
+  author={Vasan, Gautham and Elsayed, Mohamed and Azimi, Seyed Alireza and He, Jiamin and Shahriar, Fahim and Bellinger, Colin and White, Martha and Mahmood, A Rupam},
+  booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
+  year={2024}
+}
+
 ```
