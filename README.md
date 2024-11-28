@@ -10,10 +10,7 @@ This repo provides an implementation of the following incremental learning algor
 python avg.py --env "Humanoid-v4" --N 10001000
 ```
 
-## Robot Tasks
-
-| ![UR-Reacher-2](assets/UR-Reacher-2.gif) <br> UR-Reacher-2 | ![Create-Mover](assets/Create-Mover.gif) <br /> Create-Mover |
-| --- | --- |
+![AVG](assets/AVG.gif)
 
 ## Hyper-parameter search
 *AVG*
