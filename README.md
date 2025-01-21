@@ -12,6 +12,13 @@ python avg.py --env "Humanoid-v4" --N 10001000
 
 ![AVG](assets/AVG.gif)
 
+
+## Robot Tasks
+
+| ![UR-Reacher-2](assets/UR-Reacher-2.gif) <br> UR-Reacher-2 | ![Create-Mover](assets/Create-Mover.gif) <br /> Create-Mover |
+| --- | --- |
+
+
 ## Hyper-parameter search
 *AVG*
 ```
