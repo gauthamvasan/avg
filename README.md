@@ -10,8 +10,10 @@ This repo provides an implementation of the following incremental learning algor
 python avg.py --env "Humanoid-v4" --N 10001000
 ```
 
-![AVG](assets/AVG.gif)
+## Learned Behavior in Simulation
+<!-- ![AVG](assets/AVG.gif){width=200px height=200px} -->
 
+<img src="assets/AVG.gif" width="320" height="240" alt="Description">
 
 ## Robot Tasks
 
@@ -49,4 +51,8 @@ python hyp_sweep.py --algo "isac" --hyp_seed 146 --env "HalfCheetah-v4" --N 1000
   year={2024}
 }
 
+```
+
+```
+Vasan, Gautham, Mohamed Elsayed, Seyed Alireza Azimi, Jiamin He, Fahim Shahriar, Colin Bellinger, Martha White, and A. Rupam Mahmood (2024). "Deep Policy Gradient Methods Without Batch Updates, Target Networks, or Replay Buffers." In The Thirty-eighth Annual Conference on Neural Information Processing Systems.
 ```
