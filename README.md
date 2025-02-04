@@ -54,5 +54,5 @@ python hyp_sweep.py --algo "isac" --hyp_seed 146 --env "HalfCheetah-v4" --N 1000
 ```
 
 ```
-Vasan, Gautham, Mohamed Elsayed, Seyed Alireza Azimi, Jiamin He, Fahim Shahriar, Colin Bellinger, Martha White, and A. Rupam Mahmood (2024). "Deep Policy Gradient Methods Without Batch Updates, Target Networks, or Replay Buffers." In The Thirty-eighth Annual Conference on Neural Information Processing Systems.
+Vasan, G., Elsayed, M., Azimi, S. A., He, J., Shahriar, F., Bellinger, C., White, M., & Mahmood, A. R. (2024). Deep Policy Gradient Methods Without Batch Updates, Target Networks, or Replay Buffers. In The Thirty-eighth Annual Conference on Neural Information Processing Systems.
 ```
