@@ -8,7 +8,7 @@ import gymnasium as gym
 import torch.nn.functional as F
 
 from torch.distributions import MultivariateNormal
-from gymnasium.wrappers import NormalizeObservation
+from gymnasium.wrappers import NormalizeObservation, ClipAction
 from copy import deepcopy
 from incremental_rl.logger import Logger
 from incremental_rl.td_error_scaler import TDErrorScaler
@@ -279,6 +279,7 @@ def main(args):
     env = gym.wrappers.FlattenObservation(env)
     if args.normalize_obs:
         env = NormalizeObservation(env)
+    env = ClipAction(env)
 
     #### Reproducibility
     env.reset(seed=args.seed)
