@@ -1,4 +1,4 @@
-import torch, time
+import torch, time, pickle
 import argparse, os, traceback
 
 import numpy as np
@@ -247,7 +247,6 @@ def main(args):
     if args.save_model:
         agent.save(model_dir=args.results_dir, unique_str=f"{run_id}_model")
 
-
     print("Run with id: {} took {:.3f}s!".format(run_id, time.time()-tic))
     
     # Eval
@@ -293,4 +292,15 @@ if __name__ == "__main__":
     
     # Start experiment
     set_one_thread()
-    main(args)
+    ep_steps, rets = main(args)
+
+    # Save hyper-parameters and config info
+    hyperparams_dict = vars(args)
+    hyperparams_dict["device"] = str(hyperparams_dict["device"])
+    pkl_data = {'args': hyperparams_dict}
+
+    ### Saving data
+    os.makedirs(args.results_dir, exist_ok=True)
+    pkl_fpath = os.path.join(args.results_dir, "./{}_avg_default_seed-{}.pkl".format(args.env, args.seed))
+    with open(pkl_fpath, "wb") as f:
+        pickle.dump((ep_steps, rets, args.env), f)
