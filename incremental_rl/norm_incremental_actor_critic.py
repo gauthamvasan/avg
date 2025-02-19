@@ -11,7 +11,7 @@ from torch.distributions import MultivariateNormal
 from torch.optim import Adam
 from incremental_rl.logger import Logger
 from incremental_rl.td_error_scaler import TDErrorScaler
-from gymnasium.wrappers import NormalizeObservation
+from gymnasium.wrappers import NormalizeObservation, ClipAction
 from incremental_rl.utils import orthogonal_weight_init, set_one_thread
 from incremental_rl.experiment_tracker import ExperimentTracker
 
@@ -208,6 +208,7 @@ def main(args):
     env = gym.wrappers.FlattenObservation(env)
     if args.normalize_obs:
         env = NormalizeObservation(env)
+    env = ClipAction(env)
 
     #### Reproducibility
     env.reset(seed=args.seed)

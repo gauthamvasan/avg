@@ -1,4 +1,4 @@
-import torch, time
+import torch, time, pickle
 import argparse, os, traceback
 
 import numpy as np
@@ -7,9 +7,10 @@ import gymnasium as gym
 import torch.nn.functional as F
 
 from torch.distributions import MultivariateNormal
-from gymnasium.wrappers import NormalizeObservation
+from gymnasium.wrappers import NormalizeObservation, ClipAction
 from datetime import datetime
 from incremental_rl.experiment_tracker import record_video
+from incremental_rl.td_error_scaler import TDErrorScaler
 
 
 def orthogonal_weight_init(m):
@@ -116,6 +117,8 @@ class AVG:
         self.qopt = torch.optim.Adam(self.Q.parameters(), lr=cfg.critic_lr, betas=cfg.betas)
 
         self.alpha, self.gamma, self.device = cfg.alpha_lr, cfg.gamma, cfg.device
+        self.td_error_scaler = TDErrorScaler()
+        self.G = 0
 
     def compute_action(self, obs):
         obs = torch.Tensor(obs.astype(np.float32)).unsqueeze(0).to(self.device)
@@ -127,6 +130,16 @@ class AVG:
         next_obs = torch.Tensor(next_obs.astype(np.float32)).unsqueeze(0).to(self.device)
         action, lprob = action.to(self.device), kwargs['lprob']
 
+        #### Return scaling
+        r_ent = reward - self.alpha * lprob.detach().item()
+        self.G += r_ent        
+        if done:
+            self.td_error_scaler.update(reward=r_ent, gamma=0, G=self.G)
+            self.G = 0
+        else:
+            self.td_error_scaler.update(reward=r_ent, gamma=self.cfg.gamma, G=None)
+        ####
+
         #### Q loss
         q = self.Q(obs, action.detach())    # N.B: Gradient should NOT pass through action here
         with torch.no_grad():
@@ -136,6 +149,7 @@ class AVG:
             target_V = q2 - self.alpha * next_lprob
 
         delta = reward + (1 - done) *  self.gamma * target_V - q
+        delta /= self.td_error_scaler.sigma
         qloss = delta ** 2
         ####
 
@@ -170,6 +184,7 @@ def main(args):
     env = gym.make(args.env)
     env = gym.wrappers.FlattenObservation(env)
     env = NormalizeObservation(env)
+    env = ClipAction(env)
 
     #### Reproducibility
     env.reset(seed=args.seed)
@@ -232,7 +247,6 @@ def main(args):
     if args.save_model:
         agent.save(model_dir=args.results_dir, unique_str=f"{run_id}_model")
 
-
     print("Run with id: {} took {:.3f}s!".format(run_id, time.time()-tic))
     
     # Eval
@@ -278,4 +292,15 @@ if __name__ == "__main__":
     
     # Start experiment
     set_one_thread()
-    main(args)
+    ep_steps, rets = main(args)
+
+    # Save hyper-parameters and config info
+    hyperparams_dict = vars(args)
+    hyperparams_dict["device"] = str(hyperparams_dict["device"])
+    pkl_data = {'args': hyperparams_dict}
+
+    ### Saving data
+    os.makedirs(args.results_dir, exist_ok=True)
+    pkl_fpath = os.path.join(args.results_dir, "./{}_avg_default_seed-{}.pkl".format(args.env, args.seed))
+    with open(pkl_fpath, "wb") as f:
+        pickle.dump((ep_steps, rets, args.env), f)
