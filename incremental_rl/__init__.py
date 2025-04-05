@@ -14,6 +14,23 @@ register(
     max_episode_steps=20000
 )
 
+# Point Maze
+register(
+    id='point_maze_open',
+    entry_point='incremental_rl.envs.point_maze:PointMaze',
+    max_episode_steps=10000,
+    kwargs={"reward_type": "sparse", "map_type": "open",
+            "render_mode": None, "use_image": False,},
+)
+
+register(
+    id='point_maze_mt1',
+    entry_point='incremental_rl.envs.point_maze:PointMaze',
+    max_episode_steps=10000,
+    kwargs={"reward_type": "sparse", "map_type": "min_time",
+            "render_mode": None, "use_image": False,},
+)
+
 register(
     id='acrobot',
     entry_point='incremental_rl.envs.dm_control_wrapper:DMControl',
