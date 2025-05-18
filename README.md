@@ -15,6 +15,18 @@ python avg.py --env "Humanoid-v4" --N 10001000
 
 <img src="assets/AVG.gif" width="320" height="240" alt="Description">
 
+### Hyper-parameters used in the paper
+
+| hyp_seed |                Envs                 | actor_lr | critic_lr | beta1 |    betas     | alpha_lr | gamma |
+|----------|-------------------------------------|----------|-----------|-------|--------------|----------|-------|
+|   122    |       Hopper-v4, Walker2d-v4        | 1.1e-05  |  7.7e-05  |  0.0  | [0.0, 0.999] |   0.3    | 0.99  |
+|   129    | Ant-v4, HalfCheetah-v4, Humanoid-v4 |  0.0063  |  0.0087   |  0.0  | [0.0, 0.999] |   0.07   | 0.99  |
+|    12    |            reacher_hard             |  3e-06   |  0.0049   |  0.0  | [0.0, 0.999] |   0.05   | 0.97  |
+|    57    |    dog_walk, dog_trot, dog_stand    |  6e-06   |   8e-05   |  0.0  | [0.0, 0.999] |  0.009   | 0.95  |
+|   145    |             finger_spin             | 0.00038  |  8.7e-05  |  0.9  | [0.9, 0.999] |  0.006   | 0.95  |
+|   223    |               dog_run               | 1.8e-05  |  4.8e-05  |  0.0  | [0.0, 0.999] |  0.007   | 0.97  |
+
+
 ## Robot Tasks
 
 | ![UR-Reacher-2](assets/UR-Reacher-2.gif) <br> UR-Reacher-2 | ![Create-Mover](assets/Create-Mover.gif) <br /> Create-Mover |
