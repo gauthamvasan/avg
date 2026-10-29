@@ -52,6 +52,7 @@ class Actor(nn.Module):
         log_std = torch.clamp(log_std, self.LOG_STD_MIN, self.LOG_STD_MAX)
    
         try:
+            # exp(log_std) is the variance here, so the std is exp(log_std / 2).
             dist = MultivariateNormal(mu, torch.diag_embed(log_std.exp()))
         except Exception as e:
             print("Mean: {}, Sigma: {}".format(mu, torch.exp(log_std[0])))
