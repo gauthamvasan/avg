@@ -69,6 +69,7 @@ class Actor(nn.Module):
         log_std = self.log_std(phi)
         log_std = torch.clamp(log_std, self.LOG_STD_MIN, self.LOG_STD_MAX)
 
+        # exp(log_std) is the variance here, so the std is exp(log_std / 2).
         dist = MultivariateNormal(mu, torch.diag_embed(log_std.exp()))        
         action_pre = dist.rsample()
         lprob = dist.log_prob(action_pre)
